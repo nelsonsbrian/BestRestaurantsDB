@@ -1,17 +1,18 @@
-using BestRestaurants.Models;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
-namespace BestRestaurants
+using BestRestaurants;
+
+namespace BestRestaurants.Models
 {
     public class Cuisine
     {
         public int Id {get;set;}
         public string FoodType {get;set;}
-        public int RestaurantId {get;}
-        public Cuisine(string newFoodType, int newRestaurantId, int newId =0)
+       
+
+        public Cuisine(string newFoodType, int newId =0)
         {
             FoodType = newFoodType;
-            RestaurantId = newRestaurantId;
             Id = newId;
         }
         public void Create()
@@ -20,11 +21,10 @@ namespace BestRestaurants
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO `cuisines` (`food`,`restaurant_id`) VALUES (@NewFood, @NewRestaurantId);";
+            cmd.CommandText = @"INSERT INTO `cuisines` (`food`) VALUES (@NewFood);";
             MySqlParameter food = new MySqlParameter();
-            food.Parameters.AddWithValue("@NewFood",this.FoodType);
-            MySqlParameter restaurant = new MySqlParameter();
-            cmd.Parameters.AddWithValue("@NewRestaurantId",this.RestaurantId);
+            cmd.Parameters.AddWithValue("@NewFood",this.FoodType);
+           
 
             cmd.ExecuteNonQuery();
             Id = (int) cmd.LastInsertedId;
@@ -35,9 +35,9 @@ namespace BestRestaurants
             }
         }
 
-        public List<Cuisine> GetAll()
+        public static List<Cuisine> GetAll()
         {
-            List<Cuisine> allCuisines = new List<cuisine> {};
+            List<Cuisine> allCuisines = new List<Cuisine> {};
             MySqlConnection conn = DB.Connection();
             conn.Open();
 
@@ -49,9 +49,8 @@ namespace BestRestaurants
             {
                 int Id = rdr.GetInt32(0);
                 string FoodType = rdr.GetString(1);
-                int RestaurantId = rdr.GetInt32(2);
 
-                Cuisine newCuisine = new Cuisine(Id, FoodType, RestaurantId);
+                Cuisine newCuisine = new Cuisine(FoodType, Id);
                 allCuisines.Add(newCuisine);
             }
             conn.Close();
@@ -78,7 +77,27 @@ namespace BestRestaurants
                 conn.Dispose();
             }
         }
+        
+            public void Update (string newFoodType)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
 
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"UPDATE `cuisines` SET `food` = '@NewType' WHERE id = @Id;";
+            MySqlParameter foodType = new MySqlParameter();
+            cmd.Parameters.AddWithValue("@NewType",newFoodType);
+            MySqlParameter Id = new MySqlParameter();
+            cmd.Parameters.AddWithValue("@thisId",this.Id);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
 
     }
 }
