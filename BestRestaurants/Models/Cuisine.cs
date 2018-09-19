@@ -10,7 +10,6 @@ namespace BestRestaurants.Models
         public int Id {get;set;}
         public string FoodType {get;set;}
        
-
         public Cuisine(string newFoodType, int newId =0)
         {
             FoodType = newFoodType;
