@@ -22,10 +22,10 @@ namespace BestRestaurants.Models
 
             var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"INSERT INTO `restaurants` (`name`,`cuisine_id`) VALUES (@NewName,@CuisineId);";
-            MySqlParameter name = new MySqlParameter();
+          
             cmd.Parameters.AddWithValue("@NewName",this.Name);
-             MySqlParameter restaurant = new MySqlParameter();
-            cmd.Parameters.AddWithValue("@NewCuisineId",this.CuisineId);
+             
+            cmd.Parameters.AddWithValue("@CuisineId",this.CuisineId);
 
             cmd.ExecuteNonQuery();
             Id = (int) cmd.LastInsertedId;
@@ -36,7 +36,7 @@ namespace BestRestaurants.Models
             }
         }
 
-        public List<Restaurant> GetAll()
+        public static List<Restaurant> GetAll()
         {
             List<Restaurant> allRestaurants = new List<Restaurant> {};
             MySqlConnection conn = DB.Connection();
@@ -85,12 +85,12 @@ namespace BestRestaurants.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"UPDATE `restaurants` SET `name` = '@NewName' WHERE id = @Id;";
-            MySqlParameter name = new MySqlParameter();
+            cmd.CommandText = @"UPDATE `restaurants` SET `name` = @NewName WHERE id = @thisId;";
+           
             cmd.Parameters.AddWithValue("@NewName",newName);
-            MySqlParameter Id = new MySqlParameter();
+          
             cmd.Parameters.AddWithValue("@thisId",this.Id);
-
+            this.Name = newName;
             cmd.ExecuteNonQuery();
 
             conn.Close();
