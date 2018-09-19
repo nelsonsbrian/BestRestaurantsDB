@@ -65,7 +65,6 @@ namespace BestRestaurants.Tests {
            
             newRestaurant.Update("Gross!");
 
-
             Assert.AreEqual("Gross!",newRestaurant.Name);
         }
 

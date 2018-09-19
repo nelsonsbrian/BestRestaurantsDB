@@ -4,8 +4,40 @@
 
 <div class="container">
   <h1>Restaurants</h1>
+  <form class="form-group" action='/restaurants' method='post'>
+        <label>Add Restaurant: 
+            <input type="text" name="newRestaurant" class="form-control" required>
+        </label><br>
+        <select id="cuisinesSelect" name="cuisinesSelect">
+            @foreach (var cuisine in @Model["cuisines"])
+            {
+                <option value="@cuisine.FoodType">@cuisine.FoodType</option>
+            }
+            
+        </select><hr>
+      <button class='btn btn-success'>Add Restaurant</button>
+  </form><hr>
   <form action='/' method='get'>
       <button class='btn btn-success'>Back to Home</button>
-  </form>
+  </form><br>
+  
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Restaurant Name</th>
+     
+    </tr>
+  </thead>
+  @foreach (var restaurant in @Model["restaurants"])
+  {
+  <tbody>
+    <tr>
+      <th scope="row">@restaurant.Id</th>
+      <td>@restaurant.Name</td>
+    </tr>
+  </tbody>
 
+  }
+  </table>
 </div>
