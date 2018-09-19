@@ -1,4 +1,5 @@
 using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using BestRestaurants;
 
@@ -25,9 +26,9 @@ namespace BestRestaurants.Models
             MySqlParameter food = new MySqlParameter();
             cmd.Parameters.AddWithValue("@NewFood",this.FoodType);
            
-
             cmd.ExecuteNonQuery();
             Id = (int) cmd.LastInsertedId;
+            Console.WriteLine("Id:  " + Id);
             conn.Close();
             if (conn != null)
             {
@@ -84,12 +85,13 @@ namespace BestRestaurants.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"UPDATE `cuisines` SET `food` = '@NewType' WHERE id = @Id;";
+            cmd.CommandText = @"UPDATE `cuisines` SET food = @NewType WHERE id = @thisId;";
+
             MySqlParameter foodType = new MySqlParameter();
             cmd.Parameters.AddWithValue("@NewType",newFoodType);
             MySqlParameter Id = new MySqlParameter();
             cmd.Parameters.AddWithValue("@thisId",this.Id);
-
+            this.FoodType = newFoodType;
             cmd.ExecuteNonQuery();
 
             conn.Close();
