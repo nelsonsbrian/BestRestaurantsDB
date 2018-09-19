@@ -106,7 +106,7 @@ namespace BestRestaurants.Models
             conn.Open();
 
             var cmd = conn.CreateCommand()as MySqlCommand;
-            cmd.CommandText = @"SELECT id FROM `cuisines` WHERE FoodType = @NewType;";
+            cmd.CommandText = @"SELECT id FROM `cuisines` WHERE food = @NewType;";
 
             cmd.Parameters.AddWithValue("@NewType", cuisineName);
             MySqlDataReader rdr = cmd.ExecuteReader()as MySqlDataReader;
