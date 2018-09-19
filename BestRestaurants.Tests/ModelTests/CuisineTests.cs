@@ -10,11 +10,7 @@ namespace BestRestaurants.Tests
     [TestClass]
     public class CuisineTests : IDisposable
     {
-        public void Dispose()
-        {  
-          Cuisine.ClearAll();
-          Restaurant.ClearAll();
-        }
+       
         public CuisineTests()
         {
             DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=best_restaurants_test;";
@@ -24,6 +20,23 @@ namespace BestRestaurants.Tests
         {
             int result = Cuisine.GetAll().Count;
             Assert.AreEqual(0,result);
+        }
+        [TestMethod]
+        public void Create_CuisineAddedCorrectly_1()
+        {
+            Cuisine newfood = new Cuisine("Mexican", 2);
+            newfood.Create();
+
+            int result = Cuisine.GetAll().Count;
+
+            Cuisine test = Cuisine.GetAll()[0];
+            Assert.AreEqual(newfood.FoodType, test.FoodType);
+
+        }
+         public void Dispose()
+        {  
+          Cuisine.ClearAll();
+          
         }
     }
 }
