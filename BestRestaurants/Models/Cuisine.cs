@@ -4,13 +4,14 @@ namespace BestRestaurants
 {
     public class Cuisine
     {
-        public int id {get;}
-        public string foodType {get;set;}
-        public int restaurantId {get;}
-        public Cuisine(string newFoodType, int newRestaurantId)
+        public int Id {get;set;}
+        public string FoodType {get;set;}
+        public int RestaurantId {get;}
+        public Cuisine(string newFoodType, int newRestaurantId, int newId =0)
         {
-            foodType = newFoodType;
-            restaurantId = newRestaurantId;
+            FoodType = newFoodType;
+            RestaurantId = newRestaurantId;
+            Id = newId;
         }
         public void Create()
         {
@@ -18,7 +19,19 @@ namespace BestRestaurants
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            
+            cmd.CommandText = @"INSERT INTO `cuisine` (`food`,`restaurant_id`) VALUES (@NewFood, @NewRestaurantId);";
+            MySqlParameter food = new MySqlParameter();
+            food.Parameters.AddWithValue("@NewFood",this.FoodType);
+            MySqlParameter restaurant = new MySqlParameter();
+            restaurant.Parameters.AddWithValue("@NewRestaurantId",this.RestaurantId);
+
+            cmd.ExecuteNonQuery();
+            Id = (int) cmd.LastInsertedId;
+            conn.Close();
+            if (conn ! =null)
+            {
+                conn.Dispose();
+            }
         }
     }
 }
