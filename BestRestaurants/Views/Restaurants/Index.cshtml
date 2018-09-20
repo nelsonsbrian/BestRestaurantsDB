@@ -35,6 +35,11 @@
     <tr>
       <th scope="row">@restaurant.Id</th>
       <td>@restaurant.Name</td>
+      <td>
+          <form action='/restaurants/delete' method='post'>
+              <button class='btn btn-danger' type='submit'>Delete</button>
+          </form>
+      </td>
     </tr>
   </tbody>
 

@@ -27,7 +27,6 @@ namespace BestRestaurants.Models
 
             cmd.ExecuteNonQuery();
             Id = (int)cmd.LastInsertedId;
-            Console.WriteLine("Id:  " + Id);
             conn.Close();
             if (conn != null)
             {
