@@ -120,6 +120,21 @@ namespace BestRestaurants.Models
             }
             return newId;
         }
+        // public static bool ExistingCuisine(string cuisineName)
+        // {
+        //     MySqlConnection conn = DB.Connection();
+        //     conn.Open();
+
+        //     var cmd = conn.CreateCommand()as MySqlCommand;
+        //     cmd.CommandText = @"SELECT food FROM `cuisines`";
+        //      MySqlDataReader rdr = cmd.ExecuteReader()as MySqlDataReader;
+        //     List<Cuisine> allC
+        //      while (rdr.Read())
+        //      {
+
+        //      }
+
+        // }
         
     }
 }
