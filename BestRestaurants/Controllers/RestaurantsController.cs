@@ -47,13 +47,25 @@ namespace BestRestaurants.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost("/restaurants/delete/{id}/Add")]
+        [HttpPost("/restaurants/{id}/Add")]
         public ActionResult AppendCuisine(int id)
         {
             int newCuisineId = Cuisine.FindId(Request.Form["cuisinesSelect"]);
-            Menu newMenu = new Menu(newCuisineId, id);
-            newMenu.Create();
-
+            List <int> allCuisinesOfRestaurant = new List<int>{};
+            List<Menu> allMenus = Menu.GetAll();
+            foreach (Menu menu in allMenus)
+            {
+                if (menu.RestaurantId == id)
+                {
+                    allCuisinesOfRestaurant.Add(menu.CuisineId);
+                }
+            }
+            if (!allCuisinesOfRestaurant.Contains(newCuisineId))
+            {
+                Menu newMenu = new Menu(newCuisineId, id);
+                newMenu.Create();
+            }
+           
             return RedirectToAction("Index");
         }
     }
