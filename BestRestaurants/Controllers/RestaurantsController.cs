@@ -10,10 +10,12 @@ namespace BestRestaurants.Controllers
         public ActionResult Index()
         {
             Dictionary<string,object> Dict = new Dictionary<string, object>{};
+            List<Menu> allMenus = Menu.GetAll();
             List<Cuisine> allCuisines = Cuisine.GetAll();
             List<Restaurant> allRestaurants = Restaurant.GetAll();
             Dict.Add("cuisines", allCuisines);
             Dict.Add("restaurants", allRestaurants);
+            Dict.Add("menus", allMenus);
             return View(Dict);
         }
 
@@ -22,7 +24,7 @@ namespace BestRestaurants.Controllers
         {
             int cuisineId = Cuisine.FindId(Request.Form["cuisinesSelect"]);
 
-            Restaurant newRestaurant = new Restaurant(Request.Form["newRestaurant"],cuisineId);
+            Restaurant newRestaurant = new Restaurant(Request.Form["newName"],cuisineId,Request.Form["newCity"],Request.Form["newState"]);
             newRestaurant.Create();
             return RedirectToAction("Index");
         }
@@ -30,14 +32,19 @@ namespace BestRestaurants.Controllers
         [HttpPost("/restaurants/delete/{id}")]
         public ActionResult Delete(int id)
         {
-            Console.WriteLine("id" + id);
             Restaurant.Remove(id);
-            Dictionary<string,object> Dict = new Dictionary<string, object>{};
-            List<Cuisine> allCuisines = Cuisine.GetAll();
-            List<Restaurant> allRestaurants = Restaurant.GetAll();
-            Dict.Add("cuisines", allCuisines);
-            Dict.Add("restaurants", allRestaurants);            
-            return View("Index", Dict);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost("/restaurants/delete/{id}/Add")]
+        public ActionResult AppendCuisine(int id)
+        {
+            Console.WriteLine("id: " + id);
+            int newCuisineId = Cuisine.FindId(Request.Form["cuisinesSelect"]);
+            Menu newMenu = new Menu(newCuisineId, id);
+            newMenu.Create();
+
+            return RedirectToAction("Index");
         }
     }
 

@@ -5,9 +5,16 @@
 <div class="container">
   <h1>Restaurants</h1>
   <form class="form-group" action='/restaurants' method='post'>
-        <label>Add Restaurant: 
-            <input type="text" name="newRestaurant" class="form-control" required>
+        <h6>Add Restaurant</h6>
+        <label>Name: 
+            <input type="text" name="newName" class="form-control" required>
         </label><br>
+        <label>City: 
+            <input type="text" name="newCity" class="form-control" required>
+        </label><br>
+        <label>State: 
+            <input type="text" name="newState" class="form-control" required>
+        </label><br>                
         <select id="cuisinesSelect" name="cuisinesSelect">
             @foreach (var cuisine in @Model["cuisines"])
             {
@@ -26,6 +33,11 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Restaurant Name</th>
+      <th scope="col">Cuisine</th>
+      <th scope="col">Add Cuisine</th>
+      <th scope="col">City</th>
+      <th scope="col">State</th>
+      <th scope="col">Delete</th>           
      
     </tr>
   </thead>
@@ -35,6 +47,36 @@
     <tr>
       <th scope="row">@restaurant.Id</th>
       <td>@restaurant.Name</td>
+      <td>
+          @foreach (var menu in @Model["menus"])
+          {
+              @if(@menu.RestaurantId == @restaurant.Id)
+              {
+                  @foreach (var cuisine in @Model["cuisines"])
+                  {
+                      @if(@menu.CuisineId == @cuisine.Id)
+                      {
+                          @cuisine.FoodType;<br>
+                      }
+                  }
+              }
+          }
+      </td>
+      <td>
+          <form action='/restaurants/delete/@restaurant.Id/Add' method='post'>
+            <select id="cuisinesSelect" name="cuisinesSelect">
+          
+                @foreach (var cuisine in @Model["cuisines"])
+                {
+                    <option value="@cuisine.FoodType">@cuisine.FoodType</option>
+                }
+            </select>&nbsp;&nbsp;
+                <button class='btn btn-success' type='submit'>Add Cuisine</button>
+          </form>
+          
+      </td>      
+      <td>@restaurant.City</td>
+      <td>@restaurant.State</td>            
       <td>
           <form action='/restaurants/delete/@restaurant.Id' method='post'>
               <button class='btn btn-danger' type='submit'>Delete</button>
