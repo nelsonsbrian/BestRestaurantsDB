@@ -6,19 +6,19 @@ Layout = "_Layout";
     <h1>Restaurants</h1>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <form class="form-group" action='/restaurants' method='post'>
-                <label>Restaurant Name:
+                <label>Restaurant Name 
                     <input type="text" name="newName" class="form-control" required>
                 </label>
-                <label>City:
+                <label>City
                     <input type="text" name="newCity" class="form-control" required>
                 </label>
-                <label>State:
+                <label>State
                     <input type="text" name="newState" class="form-control" required>
                 </label>
                 <div>
-                    Cuisine:
+                    Cuisine
                     <select id="cuisinesSelect" name="cuisinesSelect">
                         @foreach (var cuisine in @Model["cuisines"])
                         {
@@ -31,9 +31,7 @@ Layout = "_Layout";
             <hr>
 
             <form class="form-group" action='/cuisines' method='post'>
-                <label>Add Cuisine:
-                    <input type="text" name="newCuisine" class="form-control" required>
-                </label><br>
+                <input type="text" name="newCuisine" class="form-control" required><br>
                 <button class='btn btn-success'>Add Cuisine</button>
             </form>
             <hr>
@@ -51,14 +49,12 @@ Layout = "_Layout";
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
                         <th scope="col">Restaurant Name</th>
                         <th scope="col">Cuisine</th>
                         <th scope="col">Add Cuisine</th>
                         <th scope="col">City</th>
                         <th scope="col">State</th>
                         <th scope="col">Delete</th>
-
                     </tr>
                 </thead>
 
@@ -66,7 +62,6 @@ Layout = "_Layout";
                 {
                 <tbody>
                     <tr>
-                        <th scope="row">@restaurant.Id</th>
                         <td>@restaurant.Name</td>
                         <td>
                             @foreach (var menu in @Model["menus"])

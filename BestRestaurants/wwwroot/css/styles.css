@@ -12,7 +12,11 @@ h1 {
     text-align: center;
 }
 
-.col 
+.col-md-2
 {
-    border-right: 1px solid black;
+    border: 1px solid black;
+    background:#F1D76F  ;
+}
+hr {
+    border: 1px solid black;
 }
