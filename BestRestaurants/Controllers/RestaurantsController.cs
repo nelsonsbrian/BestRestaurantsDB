@@ -39,7 +39,6 @@ namespace BestRestaurants.Controllers
         [HttpPost("/restaurants/delete/{id}/Add")]
         public ActionResult AppendCuisine(int id)
         {
-            Console.WriteLine("id: " + id);
             int newCuisineId = Cuisine.FindId(Request.Form["cuisinesSelect"]);
             Menu newMenu = new Menu(newCuisineId, id);
             newMenu.Create();

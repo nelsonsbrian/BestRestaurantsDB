@@ -12,12 +12,12 @@ namespace BestRestaurants.Controllers
             return View(cuisineList);
         }
         [HttpPost("/cuisines")]
-        public ActionResult Create()
+        public ActionResult CreateCuisine()
         {
             Cuisine newCuisine = new Cuisine(Request.Form["newCuisine"]);
             newCuisine.Create();
             List<Cuisine> cuisineList = Cuisine.GetAll();
-            return View("Index",cuisineList);
+            return RedirectToAction("Index","Restaurants",cuisineList);
         }
     }
 }

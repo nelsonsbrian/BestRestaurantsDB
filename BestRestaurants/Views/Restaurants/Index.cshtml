@@ -2,33 +2,52 @@
   Layout = "_Layout";
 }
 
-<div class="container">
+<div class="container-fluid">
   <h1>Restaurants</h1>
-  <form class="form-group" action='/restaurants' method='post'>
-        <h6>Add Restaurant</h6>
-        <label>Name: 
-            <input type="text" name="newName" class="form-control" required>
-        </label><br>
-        <label>City: 
-            <input type="text" name="newCity" class="form-control" required>
-        </label><br>
-        <label>State: 
-            <input type="text" name="newState" class="form-control" required>
-        </label><br>                
-        <select id="cuisinesSelect" name="cuisinesSelect">
-            @foreach (var cuisine in @Model["cuisines"])
-            {
-                <option value="@cuisine.FoodType">@cuisine.FoodType</option>
-            }
-            
-        </select><hr>
-      <button class='btn btn-success'>Add Restaurant</button>
-  </form><hr>
   <form action='/' method='get'>
-      <button class='btn btn-success'>Back to Home</button>
+      <button class='btn btn-info'>Back to Home</button>
   </form><br>
   
-<table class="table">
+  <div class="row">
+      <div class="col-md-3">
+        <form class="form-group" action='/restaurants' method='post'>
+            <label>Restaurant Name: 
+                <input type="text" name="newName" class="form-control" required>
+            </label>
+            <label>City: 
+                <input type="text" name="newCity" class="form-control" required>
+            </label>
+            <label>State: 
+                <input type="text" name="newState" class="form-control" required>
+            </label>
+            <div>
+                Cuisine:          
+            <select id="cuisinesSelect" name="cuisinesSelect">
+                @foreach (var cuisine in @Model["cuisines"])
+                {
+                    <option value="@cuisine.FoodType">@cuisine.FoodType</option>
+                }
+            </select>
+            </div><br>
+            <button class='btn btn-success'>Add Restaurant</button>
+         </form><hr>
+
+        <form class="form-group" action='/cuisines' method='post'>
+            <label>Add Cuisine: 
+                <input type="text" name="newCuisine" class="form-control" required>
+            </label><br>
+            <button class='btn btn-success'>Add Cuisine</button>
+        </form><hr>
+
+            <h4>Cuisines</h4>
+           @foreach (var cuisine in @Model["cuisines"])
+            {
+                @cuisine.FoodType<br>
+            }
+
+      </div>
+      <div class="col">
+          <table class="table">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -41,6 +60,7 @@
      
     </tr>
   </thead>
+
   @foreach (var restaurant in @Model["restaurants"])
   {
   <tbody>
@@ -64,13 +84,15 @@
       </td>
       <td>
           <form action='/restaurants/delete/@restaurant.Id/Add' method='post'>
+          <div>
             <select id="cuisinesSelect" name="cuisinesSelect">
           
                 @foreach (var cuisine in @Model["cuisines"])
                 {
                     <option value="@cuisine.FoodType">@cuisine.FoodType</option>
                 }
-            </select>&nbsp;&nbsp;
+            </select>
+            </div><br>
                 <button class='btn btn-success' type='submit'>Add Cuisine</button>
           </form>
           
@@ -87,4 +109,7 @@
 
   }
   </table>
+      </div>
+  </div>  
+
 </div>
