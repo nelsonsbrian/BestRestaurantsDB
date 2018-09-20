@@ -23,9 +23,20 @@ namespace BestRestaurants.Controllers
         public ActionResult Create()
         {
             int cuisineId = Cuisine.FindId(Request.Form["cuisinesSelect"]);
-
+            List<Restaurant> RestaurantList = Restaurant.GetAll();
+            int flag = 0;
+            foreach (Restaurant Restaurant in RestaurantList)
+            {
+                if (Restaurant.Name== Request.Form["newName"])
+                {
+                    flag++;
+                }
+            }
+            if (flag == 0)
+            {
             Restaurant newRestaurant = new Restaurant(Request.Form["newName"],cuisineId,Request.Form["newCity"],Request.Form["newState"]);
             newRestaurant.Create();
+            }
             return RedirectToAction("Index");
         }
 

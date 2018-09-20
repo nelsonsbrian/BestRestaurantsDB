@@ -30,7 +30,6 @@ namespace BestRestaurants.Controllers
             {
                 Cuisine newCuisine = new Cuisine(Request.Form["newCuisine"]);
                 newCuisine.Create();
-                return RedirectToAction("Index", "Restaurants");
             }
             return RedirectToAction("Index","Restaurants");
         }
