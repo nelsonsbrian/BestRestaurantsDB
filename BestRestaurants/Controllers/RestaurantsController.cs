@@ -26,6 +26,19 @@ namespace BestRestaurants.Controllers
             newRestaurant.Create();
             return RedirectToAction("Index");
         }
+
+        [HttpPost("/restaurants/delete/{id}")]
+        public ActionResult Delete(int id)
+        {
+            Console.WriteLine("id" + id);
+            Restaurant.Remove(id);
+            Dictionary<string,object> Dict = new Dictionary<string, object>{};
+            List<Cuisine> allCuisines = Cuisine.GetAll();
+            List<Restaurant> allRestaurants = Restaurant.GetAll();
+            Dict.Add("cuisines", allCuisines);
+            Dict.Add("restaurants", allRestaurants);            
+            return View("Index", Dict);
+        }
     }
 
 }

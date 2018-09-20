@@ -36,6 +36,25 @@ namespace BestRestaurants.Models
             }
         }
 
+        public static void Remove(int idToRemove)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM restaurants WHERE id = @deleteId;";
+            cmd.Parameters.AddWithValue("@deleteId", idToRemove);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+
+        }
+
         public static List<Restaurant> GetAll()
         {
             List<Restaurant> allRestaurants = new List<Restaurant> {};
